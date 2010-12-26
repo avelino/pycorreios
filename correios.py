@@ -18,17 +18,6 @@ from xml.dom import minidom
 
 import cod
 
-"""
-FRETE_PAC = 41106
-FRETE_SEDEX = 40010
-FRETE_SEDEX_10 = 40215
-FRETE_SEDEX_HOJE = 40290
-FRETE_E_SEDEX = 81019
-OTE = 44105
-FRETE_NORMAL = 41017
-SEDEX_A_COBRAR = 40045
-"""
-
 def frete(cod,GOCEP,HERECEP,peso,
           comprimento,diametro,toback='xml'):
 
