@@ -16,6 +16,8 @@ import urllib2
 import sys
 from xml.dom import minidom
 
+import cod
+
 """
 FRETE_PAC = 41106
 FRETE_SEDEX = 40010
