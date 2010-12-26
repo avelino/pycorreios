@@ -2,8 +2,7 @@
 from correios import frete
 from correios import cod
 
-test = frete(cod.FRETE_SEDEX,'44001535','03971010',10,18,8)
-print test
+test = frete(cod.SEDEX,'44001535','03971010',10,18,8)
 if test['Erro'] != '0':
     print 'Deu erro! :('
     print test['Erro']
