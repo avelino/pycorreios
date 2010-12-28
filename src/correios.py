@@ -18,10 +18,20 @@ from xml.dom import minidom
 
 import cod
 
+def __getDados(tags_name, dom):
+    dados = {}
+
+    for tag_name in tags_name:
+        try:
+            dados[tag_name] = dom.getElementsByTagName(tag_name)[0]
+            dados[tag_name] = dados[tag_name].childNodes[0].data
+        except:
+            dados[tag_name] = ''
+
+    return dados
+
 def frete(cod,GOCEP,HERECEP,peso,
           comprimento,diametro,toback='xml'):
-
-    dados = {}
 
     url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?\
            StrRetorno=%s\
@@ -45,18 +55,9 @@ def frete(cod,GOCEP,HERECEP,peso,
                  'EntregaSabado',
                 )
 
-    for tag_name in tags_name:
-        try:
-            dados[tag_name] = dom.getElementsByTagName(tag_name)[0]
-            dados[tag_name] = dados[tag_name].childNodes[0].data
-        except:
-            dados[tag_name] = ''
-
-    return dados
+    return __getDados(tags_name, dom)
 
 def cep(numero):
-    dados = {}
-
     url = 'http://cep.republicavirtual.com.br/web_cep.php?\
            formato=xml&cep=%s' % (str(numero))
     dom = minidom.parse(urllib2.urlopen(url))
@@ -71,14 +72,9 @@ def cep(numero):
     resultado = dom.getElementsByTagName('resultado')[0]
     resultado = int(resultado.childNodes[0].data)
     if resultado != 0:
-        for tag_name in tags_name:
-            try:
-                dados[tag_name] = dom.getElementsByTagName(tag_name)[0]
-                dados[tag_name] = dados[tag_name].childNodes[0].data
-            except:
-                dados[tag_name] = ''
-
-    return dados
+        return __getDados(tags_name, dom)
+    else:
+        return {}
 
 # Delete the modules to not show up in the namespace
 # del  urllib2, sys, minidom
