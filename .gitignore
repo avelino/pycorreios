@@ -7,3 +7,4 @@ build/
 dist/
 pycorreios.egg-info/
 env/
+.pypirc
