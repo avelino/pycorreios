@@ -16,8 +16,6 @@ import urllib2
 import sys
 from xml.dom import minidom
 
-import cod
-
 class Correios(object):
     def __init__(self):
         self.status = 'OK'
@@ -87,6 +85,3 @@ class Correios(object):
             return self._getDados(tags_name, dom)
         else:
             return {}
-
-# Delete the modules to not show up in the namespace
-# del  urllib2, sys, minidom

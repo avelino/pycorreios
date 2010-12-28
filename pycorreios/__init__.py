@@ -1,7 +1,5 @@
 import correios
 from correios import *
-import cod
-from cod import *
 
 # __all__ = (correios.__all__ + cod.__all__)
 

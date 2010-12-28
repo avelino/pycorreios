@@ -7,7 +7,10 @@ if test['Erro'] != '0':
     print test['Erro']
     print test['MsgErro']
 else:
-    print "Valor: %s\nPrazo de Entrega: %s" % (test['Valor'],test['PrazoEntrega'])
+    print "Valor: R$%s\nPrazo de Entrega: %s" % (test['Valor'],test['PrazoEntrega'])
 
-other_test = Correios().cep(44010000)
-print other_test['bairro']
+print
+
+other_test = Correios().cep('03971010')
+for tag_name in other_test.keys():
+    print tag_name + ': ' + other_test[tag_name]
