@@ -3,7 +3,12 @@ API Correios
 
 Installation
 ============
-If you have setuptools you can use easy_install -U pycorreios. Otherwise, you can download the source from GitHub and run python setup.py install.
+If you have _setuptools_ you can use 
+    $ easy_install -U pycorreios.
+Otherwise, you can download the source from [GitHub][git] and run 
+    $ python setup.py install.
+
+    [git]: htt://https://github.com/dnerylopes/pycorreios   "PyCorreios"
 
 Examples
 ========
