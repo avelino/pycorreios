@@ -4,6 +4,6 @@ API Correios
 Authors:
 --------
 
-Thiago Avelino <thiagoavelinoster@gmail.com>
+Thiago Avelino (<thiagoavelinoster@gmail.com>)
 
-Dilan Nery <dnerylopes@gmail.com>
+Dilan Nery (<dnerylopes@gmail.com>)
