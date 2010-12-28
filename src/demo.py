@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from correios import frete, cep
+from correios import Correios
 from correios import cod
 
-test = frete(cod.SEDEX,'44001535','03971010',10,18,8)
+correio = Correios()
+
+test = correio.frete(cod.SEDEX,'44001535','03971010',10,18,8)
 if test['Erro'] != '0':
     print 'Deu erro! :('
     print test['Erro']
@@ -10,5 +12,5 @@ if test['Erro'] != '0':
 else:
     print "Valor: %s\nPrazo de Entrega: %s" % (test['Valor'],test['PrazoEntrega'])
 
-other_test = cep(44010000)
+other_test = correio.cep(44010000)
 print other_test['bairro']
