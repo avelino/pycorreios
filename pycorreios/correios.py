@@ -94,6 +94,9 @@ class Correios(object):
             return {}
 
     def encomenda(self,numero):
+        # Usado como referencia o codigo do Guilherme Chapiewski
+        # https://github.com/guilhermechapiewski/correios-api-py
+
         url = 'http://websro.correios.com.br/sro_bin/txect01$.QueryList?\
                P_ITEMCODE=&P_LINGUA=001&P_TESTE=&P_TIPO=001&P_COD_UNI=%s'\
                % (str(numero),)
