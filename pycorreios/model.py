@@ -36,19 +36,3 @@ class Encomenda(object):
         self.local = local
         self.status = status
         
-    def __cmp__(self, other):
-        data = self.data == other.data
-        print data
-        print self.data
-        print other.data
-        local = self.local == other.local
-        print local
-        print self.local
-        print other.local
-        status = self.status == other.status
-        print status
-        print self.status
-        print other.status
-        
-        return (data and local and status)
-        
