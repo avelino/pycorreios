@@ -14,7 +14,14 @@ __author__ = {
 
 import urllib2
 import sys
+import re
 from xml.dom import minidom
+try:
+    from BeautifulSoup import BeautifulSoup
+except ImportError:
+    raise ImportError, 'Você não tem o modulo BeautifulSoup'
+
+from model import Cep, Frete, Encomenda
 
 class Correios(object):
     def __init__(self):
@@ -69,7 +76,7 @@ class Correios(object):
 
     def cep(self,numero):
         url = 'http://cep.republicavirtual.com.br/web_cep.php?\
-               formato=xml&cep=%s' % (str(numero))
+               formato=xml&cep=%s' % (str(numero),)
         dom = minidom.parse(urllib2.urlopen(url))
 
         tags_name = ('uf',
@@ -85,3 +92,29 @@ class Correios(object):
             return self._getDados(tags_name, dom)
         else:
             return {}
+
+    def encomenda(self,numero):
+        url = 'http://websro.correios.com.br/sro_bin/txect01$.QueryList?\
+               P_ITEMCODE=&P_LINGUA=001&P_TESTE=&P_TIPO=001&P_COD_UNI=%s'\
+               % (str(numero),)
+        html = urllib2.urlopen(url).read()
+        table = re.search(r'<table.*</TABLE>', html, re.S).group()
+        
+        parsed = BeautifulSoup(table)
+        
+        dados = []
+        count = 0
+        for tr in parsed.table:
+            if count > 4 and str(tr).strip() != '':
+                if re.match(r'\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}', tr.contents[0].string):
+                    dados.append(
+                            Encomenda(data=unicode(tr.contents[0].string),
+                                    local=unicode(tr.contents[1].string),
+                                    status=unicode(tr.contents[2].font.string))
+                    )
+                else:
+                    dados[len(dados) - 1].detalhes = unicode(tr.contents[0].string)
+                    
+            count = count + 1
+            
+        return dados

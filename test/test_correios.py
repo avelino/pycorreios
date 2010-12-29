@@ -10,10 +10,11 @@ sys.path.insert(0, test_root)
 import unittest
 
 from pycorreios.correios import Correios
+from pycorreios.model import Cep, Frete, Encomenda
 
 class CorreiosTests(unittest.TestCase):
     def testFrete(self):
-        valor_esperado = {'MsgErro': '',
+        valor_esperado = {'MsgErro': '', 
                           'PrazoEntrega': u'1', 
                           'Erro': u'0', 
                           'ValorValorDeclarado': u'0,00', 
@@ -26,7 +27,7 @@ class CorreiosTests(unittest.TestCase):
         valor = Correios().frete(Correios().SEDEX,'44001535',
                                  '03971010',10,18,8)
 
-        self.failUnless(valor == valor_esperado)
+        assert valor == valor_esperado
 
     def testCep(self):
         valor_esperado = {'tipo_logradouro': u'Rua', 
@@ -36,7 +37,15 @@ class CorreiosTests(unittest.TestCase):
                           'logradouro': u'Pascoal Dias'
                          } 
         valor = Correios().cep('03971010')
-        self.failUnless(valor == valor_esperado)
+        assert valor == valor_esperado
+        
+    def testEncomenda(self):
+        valor_esperado = Encomenda(data='30/11/2010 18:49', local='CEE BRAS - SAO PAULO/SP', status='Entregue')
+        valor = Correios().encomenda('SW238151411BR')[0]
+        
+        assert valor.data == valor_esperado.data
+        assert valor.local == valor_esperado.local
+        assert valor.status == valor_esperado.status
 def main():
     unittest.main()
 
