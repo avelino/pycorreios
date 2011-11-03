@@ -50,14 +50,7 @@ class Correios(object):
     def frete(self,cod,GOCEP,HERECEP,peso,
               comprimento,diametro,toback='xml'):
     
-        url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?\
-               StrRetorno=%s\
-               &nCdServico=%s\
-               &nVlPeso=%i\
-               &sCepOrigem=%s\
-               &sCepDestino=%s\
-               &nVlComprimento=%s\
-               &nVlDiametro=%s" % (toback,cod,peso,HERECEP,
+        url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?StrRetorno=%s&nCdServico=%s&nVlPeso=%i&sCepOrigem=%s&sCepDestino=%s&nVlComprimento=%s&nVlDiametro=%s" % (toback,cod,peso,HERECEP,
                                    GOCEP,comprimento,diametro)
         dom = minidom.parse(urllib2.urlopen(url))
     
@@ -75,8 +68,7 @@ class Correios(object):
         return self._getDados(tags_name, dom)
 
     def cep(self,numero):
-        url = 'http://cep.republicavirtual.com.br/web_cep.php?\
-               formato=xml&cep=%s' % (str(numero),)
+        url = 'http://cep.republicavirtual.com.br/web_cep.php?formato=xml&cep=%s' % (str(numero),)
         dom = minidom.parse(urllib2.urlopen(url))
 
         tags_name = ('uf',
@@ -97,9 +89,7 @@ class Correios(object):
         # Usado como referencia o codigo do Guilherme Chapiewski
         # https://github.com/guilhermechapiewski/correios-api-py
 
-        url = 'http://websro.correios.com.br/sro_bin/txect01$.QueryList?\
-               P_ITEMCODE=&P_LINGUA=001&P_TESTE=&P_TIPO=001&P_COD_UNI=%s'\
-               % (str(numero),)
+        url = 'http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_ITEMCODE=&P_LINGUA=001&P_TESTE=&P_TIPO=001&P_COD_UNI=%s' % (str(numero),)
         html = urllib2.urlopen(url).read()
         table = re.search(r'<table.*</TABLE>', html, re.S).group()
         
