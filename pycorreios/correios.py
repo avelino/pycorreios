@@ -21,6 +21,8 @@ try:
 except ImportError:
     raise ImportError, 'Você não tem o modulo BeautifulSoup'
 
+from Model import Encomenda
+    
 class Correios(object):
     def __init__(self):
         self.status = 'OK'
@@ -96,8 +98,7 @@ class Correios(object):
                      'cidade',
                      'bairro',
                      'tipo_logradouro',
-                     'logradouro',
-                    )
+                     'logradouro',)
 
         resultado = dom.getElementsByTagName('resultado')[0]
         resultado = int(resultado.childNodes[0].data)
