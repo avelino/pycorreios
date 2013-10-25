@@ -17,10 +17,10 @@ Examples
 --------
 Some simple examples of what pyCorreios code looks like:
 
-    # -*- coding: utf-8 -*-
+    ```python
     from pycorreios import Correios
     
-    # with a dictionary paramenter
+    # with a dictionary paramenter - the field order doesn't matter
     fields = {"cod": Correios().SEDEX, 
     	      "GOCEP": "44001535",
 	      "HERECEP": "03971010",
@@ -33,8 +33,8 @@ Some simple examples of what pyCorreios code looks like:
 
     test = Correios().frete(**fields)   # remember to call with **
 
-    # or with positional parameters
-    # test = Correios().frete(Correios().SEDEX,'44001535','03971010',2,1,18,8,24,12)
+    # or with positional parameters - same result as above
+    test = Correios().frete(Correios().SEDEX,'44001535','03971010',2,1,18,8,24,12)
 
     if test['Erro'] != '0':
         print 'Deu erro! :('
@@ -43,8 +43,8 @@ Some simple examples of what pyCorreios code looks like:
     else:
         print "Valor: R$%s\nPrazo de Entrega: %s" % (test['Valor'],test['PrazoEntrega'])
 
-    print
 
     other_test = Correios().cep('03971010')
     for tag_name in other_test.keys():
         print tag_name + ': ' + other_test[tag_name]
+    ```
