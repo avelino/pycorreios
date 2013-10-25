@@ -2,21 +2,40 @@ API Correios
 ============
 
 Installation
-============
+------------
 If you have _setuptools_ you can use 
+
     $ easy_install -U pycorreios
+
 Otherwise, you can download the source from [GitHub][git] and run 
+
     $ python setup.py install
 
 [git]: https://github.com/avelino/pycorreios "PyCorreios"
 
 Examples
-========
+--------
 Some simple examples of what pyCorreios code looks like:
+
     # -*- coding: utf-8 -*-
     from pycorreios import Correios
+    
+    # with a dictionary paramenter
+    fields = {"cod": Correios().SEDEX, 
+    	      "GOCEP": "44001535",
+	      "HERECEP": "03971010",
+	      "peso": "2",
+	      "formato": "1", # caixa/pacote
+	      "comprimento": "18",
+	      "altura": "8",
+	      "largura": "24",
+	      "diametro": "12"}
 
-    test = Correios().frete(Correios().SEDEX,'44001535','03971010',10,18,8)
+    test = Correios().frete(**fields)   # remember to call with **
+
+    # or with positional parameters
+    # test = Correios().frete(Correios().SEDEX,'44001535','03971010',2,1,18,8,24,12)
+
     if test['Erro'] != '0':
         print 'Deu erro! :('
         print test['Erro']

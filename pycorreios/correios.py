@@ -12,16 +12,14 @@ __author__ = {
               'Dilan Nery': 'dnerylopes@gmail.com',
              }
 
+import urllib
 import urllib2
-import sys
 import re
 from xml.dom import minidom
 try:
     from BeautifulSoup import BeautifulSoup
 except ImportError:
     raise ImportError, 'Você não tem o modulo BeautifulSoup'
-
-from model import Cep, Frete, Encomenda
 
 class Correios(object):
     def __init__(self):
@@ -47,11 +45,34 @@ class Correios(object):
 
         return dados
 
-    def frete(self,cod,GOCEP,HERECEP,peso,
-              comprimento,diametro,toback='xml'):
-    
-        url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?StrRetorno=%s&nCdServico=%s&nVlPeso=%i&sCepOrigem=%s&sCepDestino=%s&nVlComprimento=%s&nVlDiametro=%s" % (toback,cod,peso,HERECEP,
-                                   GOCEP,comprimento,diametro)
+    # Vários campos viraram obrigatórios para cálculo de frete:
+    # http://www.correios.com.br/webServices/PDF/SCPP_manual_implementacao_calculo_remoto_de_precos_e_prazos.pdf (páginas 2 e 3)
+    def frete(self, cod, GOCEP, HERECEP, peso, formato,
+              comprimento, altura, largura, diametro, mao_propria='N',
+              valor_declarado='0', aviso_recebimento='N',
+              empresa='', senha='', toback='xml'):
+        
+        base_url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx"
+
+        fields = [
+            ('nCdEmpresa', empresa),
+            ('sDsSenha', senha),
+            ('nCdServico', cod),
+            ('sCepOrigem', HERECEP),
+            ('sCepDestino', GOCEP),
+            ('nVlPeso', peso),
+            ('nCdFormato', formato),
+            ('nVlComprimento', comprimento),
+            ('nVlAltura', altura),
+            ('nVlLargura', largura),
+            ('nVlDiametro', diametro),
+            ('sCdMaoPropria', mao_propria),
+            ('nVlValorDeclarado', valor_declarado),
+            ('sCdAvisoRecebimento', aviso_recebimento),
+            ('StrRetorno', toback),
+        ]
+
+        url = base_url + "?" + urllib.urlencode(fields)
         dom = minidom.parse(urllib2.urlopen(url))
     
         tags_name = ('MsgErro',
@@ -62,11 +83,11 @@ class Correios(object):
                      'ValorMaoPropria',
                      'ValorValorDeclarado',
                      'EntregaDomiciliar',
-                     'EntregaSabado',
-                    )
+                     'EntregaSabado',)
 
         return self._getDados(tags_name, dom)
 
+        
     def cep(self,numero):
         url = 'http://cep.republicavirtual.com.br/web_cep.php?formato=xml&cep=%s' % (str(numero),)
         dom = minidom.parse(urllib2.urlopen(url))
