@@ -21,7 +21,7 @@ try:
 except ImportError:
     raise ImportError, 'Você não tem o modulo BeautifulSoup'
 
-from Model import Encomenda
+from model import Encomenda
     
 class Correios(object):
     def __init__(self):
