@@ -5,7 +5,7 @@ from correios import *
 
 __author__ = 'Thaigo Avelino'
 
-VERSION = (0, 1, 1)
+VERSION = (0, 1, 2)
 
 def get_version():
     version = '%s.%s' % (VERSION[0], VERSION[1])
