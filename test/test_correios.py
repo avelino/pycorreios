@@ -15,17 +15,17 @@ from pycorreios.model import Cep, Frete, Encomenda
 class CorreiosTests(unittest.TestCase):
     def testFrete(self):
         valor_esperado = {'MsgErro': '', 
-                          'PrazoEntrega': u'1', 
+                          'PrazoEntrega': u'2',
                           'Erro': u'0', 
                           'ValorValorDeclarado': u'0,00', 
                           'EntregaDomiciliar': u'S', 
                           'ValorMaoPropria': u'0,00', 
                           'EntregaSabado': u'S', 
-                          'Valor': u'151,40', 
+                          'Valor': u'62,40',
                           'Codigo': u'40010'
                          }
-        valor = Correios().frete(Correios().SEDEX,'44001535',
-                                 '03971010',10,18,8)
+        valor = Correios().frete(Correios().SEDEX, '44001535',
+                                 '03971010', 1, 1, 18, 9, 13.5, 0)
 
         assert valor == valor_esperado
 
