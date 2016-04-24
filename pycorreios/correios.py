@@ -8,20 +8,22 @@ Api para usar dados dos Correios
 
 __version__ = '0.1.0'
 __author__ = {
-              'Thiago Avelino': 'thiagoavelinoster@gmail.com',
-              'Dilan Nery': 'dnerylopes@gmail.com',
-             }
+    'Thiago Avelino': 'thiagoavelinoster@gmail.com',
+    'Dilan Nery': 'dnerylopes@gmail.com',
+}
 
 import urllib
 import urllib2
 import re
 from xml.dom import minidom
+
 try:
     from BeautifulSoup import BeautifulSoup
 except ImportError:
-    raise ImportError, 'Você não tem o modulo BeautifulSoup'
+    raise 'Você não tem o modulo BeautifulSoup', ImportError
 
 from model import Encomenda
+
 
 class Correios(object):
 
@@ -91,9 +93,9 @@ class Correios(object):
 
         return self._getDados(tags_name, dom)
 
-
-    def cep(self,numero):
-        url = 'http://cep.republicavirtual.com.br/web_cep.php?formato=xml&cep=%s' % (str(numero),)
+    def cep(self, numero):
+        url = 'http://cep.republicavirtual.com.br/web_cep.php?formato=' \
+              'xml&cep=%s' % str(numero)
         dom = minidom.parse(urllib2.urlopen(url))
 
         tags_name = ('uf',
@@ -109,11 +111,14 @@ class Correios(object):
         else:
             return {}
 
-    def encomenda(self,numero):
+    def encomenda(self, numero):
         # Usado como referencia o codigo do Guilherme Chapiewski
         # https://github.com/guilhermechapiewski/correios-api-py
 
-        url = 'http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_ITEMCODE=&P_LINGUA=001&P_TESTE=&P_TIPO=001&P_COD_UNI=%s' % (str(numero),)
+        url = 'http://websro.correios.com.br/sro_bin/txect01$.QueryList?' \
+              'P_ITEMCODE=&P_LINGUA=001&P_TESTE=&P_TIPO=001&P_COD_UNI=%s' % \
+              str(numero)
+
         html = urllib2.urlopen(url).read()
         table = re.search(r'<table.*</TABLE>', html, re.S).group(0)
 
@@ -123,15 +128,17 @@ class Correios(object):
         count = 0
         for tr in parsed.table:
             if count > 4 and str(tr).strip() != '':
-                if re.match(r'\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}', tr.contents[0].string):
+                if re.match(r'\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}',
+                            tr.contents[0].string):
                     dados.append(
-                            Encomenda(data=unicode(tr.contents[0].string),
-                                    local=unicode(tr.contents[1].string),
-                                    status=unicode(tr.contents[2].font.string))
+                        Encomenda(data=unicode(tr.contents[0].string),
+                                  local=unicode(tr.contents[1].string),
+                                  status=unicode(tr.contents[2].font.string))
                     )
                 else:
-                    dados[len(dados) - 1].detalhes = unicode(tr.contents[0].string)
+                    dados[len(dados) - 1].detalhes = unicode(
+                        tr.contents[0].string)
 
-            count = count + 1
+            count += 1
 
         return dados
