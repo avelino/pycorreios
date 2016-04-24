@@ -24,18 +24,20 @@ except ImportError:
 from model import Encomenda
     
 class Correios(object):
+
+    PAC = 41106
+    SEDEX = 40010
+    SEDEX_10 = 40215
+    SEDEX_HOJE = 40290
+    E_SEDEX = 81019
+    OTE = 44105
+    NORMAL = 41017
+    SEDEX_A_COBRAR = 40045
+
     def __init__(self):
         self.status = 'OK'
-        self.PAC = 41106
-        self.SEDEX = 40010
-        self.SEDEX_10 = 40215
-        self.SEDEX_HOJE = 40290
-        self.E_SEDEX = 81019
-        self.OTE = 44105
-        self.NORMAL = 41017
-        self.SEDEX_A_COBRAR = 40045
 
-    def _getDados(self,tags_name, dom):
+    def _getDados(self, tags_name, dom):
         dados = {}
 
         for tag_name in tags_name:

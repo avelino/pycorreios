@@ -21,7 +21,7 @@ Some simple examples of what pyCorreios code looks like:
 from pycorreios import Correios
 
 # with a dictionary paramenter - the field order doesn't matter
-fields = {"cod": Correios().SEDEX, 
+fields = {"cod": Correios.SEDEX, 
           "GOCEP": "44001535",
           "HERECEP": "03971010",
           "peso": "2",
@@ -34,7 +34,7 @@ fields = {"cod": Correios().SEDEX,
 test = Correios().frete(**fields)   # remember to call with **
 
 # or with positional parameters - same result as above
-test = Correios().frete(Correios().SEDEX,'44001535','03971010',2,1,18,8,24,12)
+test = Correios().frete(Correios.SEDEX,'44001535','03971010',2,1,18,8,24,12)
 
 if test['Erro'] != '0':
     print 'Deu erro! :('

@@ -12,7 +12,9 @@ import unittest
 from pycorreios.correios import Correios
 from pycorreios.model import Cep, Frete, Encomenda
 
+
 class CorreiosTests(unittest.TestCase):
+
     def testFrete(self):
         valor_esperado = {'MsgErro': '', 
                           'PrazoEntrega': u'2',
@@ -24,7 +26,7 @@ class CorreiosTests(unittest.TestCase):
                           'Valor': u'62,40',
                           'Codigo': u'40010'
                          }
-        valor = Correios().frete(Correios().SEDEX, '44001535',
+        valor = Correios().frete(Correios.SEDEX, '44001535',
                                  '03971010', 1, 1, 18, 9, 13.5, 0)
 
         assert valor == valor_esperado
