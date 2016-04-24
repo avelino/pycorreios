@@ -113,7 +113,7 @@ class Correios(object):
 
         url = 'http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_ITEMCODE=&P_LINGUA=001&P_TESTE=&P_TIPO=001&P_COD_UNI=%s' % (str(numero),)
         html = urllib2.urlopen(url).read()
-        table = re.search(r'<table.*</TABLE>', html, re.S).group()
+        table = re.search(r'<table.*</TABLE>', html, re.S).group(0)
         
         parsed = BeautifulSoup(table)
         

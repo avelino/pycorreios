@@ -40,12 +40,15 @@ class CorreiosTests(unittest.TestCase):
         assert valor == valor_esperado
         
     def testEncomenda(self):
-        valor_esperado = Encomenda(data='30/11/2010 18:49', local='CEE BRAS - SAO PAULO/SP', status='Entregue')
-        valor = Correios().encomenda('SW238151411BR')[0]
+        valor_esperado = Encomenda(data='03/02/2016 17:57',
+                                   local=u'CDD ITAJUBA - Itajuba/MG',
+                                   status='Entrega Efetuada')
+        valor = Correios().encomenda('PJ382325976BR')[0]
         
         assert valor.data == valor_esperado.data
         assert valor.local == valor_esperado.local
         assert valor.status == valor_esperado.status
+
 def main():
     unittest.main()
 
