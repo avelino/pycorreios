@@ -1,7 +1,7 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 import os
 
-DESCRIPTION = "API for correios in Python"
+DESCRIPTION = "API for Brazillian Correios in Python"
 
 LONG_DESCRIPTION = None
 try:
@@ -9,13 +9,15 @@ try:
 except:
     pass
 
+
 def get_version(version_tuple):
     version = '%s.%s' % (version_tuple[0], version_tuple[1])
     if version_tuple[2]:
         version = '%s.%s' % (version, version_tuple[2])
     return version
 
-# Dirty hack to get version number from pycorreios/__init__.py - we can't 
+
+# Dirty hack to get version number from pycorreios/__init__.py - we can't
 # file is read
 init = os.path.join(os.path.dirname(__file__), 'pycorreios', '__init__.py')
 version_line = filter(lambda l: l.startswith('VERSION'), open(init))[0]
@@ -33,7 +35,10 @@ CLASSIFIERS = [
 
 setup(name='pycorreios',
       version=VERSION,
-      packages=find_packages(),
+      packages=[
+          'test',
+          'pycorreios',
+      ],
       author='Thiago Avelino',
       author_email='thiagoavelinoster@gmail.com',
       url='https://github.com/avelino/pycorreios/',
@@ -43,5 +48,5 @@ setup(name='pycorreios',
       long_description=LONG_DESCRIPTION,
       platforms=['any'],
       classifiers=CLASSIFIERS,
-      test_suite='tests',
-)
+      test_suite='test',
+      )
