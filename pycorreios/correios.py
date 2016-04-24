@@ -22,7 +22,7 @@ except ImportError:
     raise ImportError, 'Você não tem o modulo BeautifulSoup'
 
 from model import Encomenda
-    
+
 class Correios(object):
 
     PAC = 41106
@@ -55,7 +55,7 @@ class Correios(object):
               comprimento, altura, largura, diametro, mao_propria='N',
               valor_declarado='0', aviso_recebimento='N',
               empresa='', senha='', toback='xml'):
-        
+
         base_url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx"
 
         fields = [
@@ -78,7 +78,7 @@ class Correios(object):
 
         url = base_url + "?" + urllib.urlencode(fields)
         dom = minidom.parse(urllib2.urlopen(url))
-    
+
         tags_name = ('MsgErro',
                      'Erro',
                      'Codigo',
@@ -91,7 +91,7 @@ class Correios(object):
 
         return self._getDados(tags_name, dom)
 
-        
+
     def cep(self,numero):
         url = 'http://cep.republicavirtual.com.br/web_cep.php?formato=xml&cep=%s' % (str(numero),)
         dom = minidom.parse(urllib2.urlopen(url))
@@ -116,9 +116,9 @@ class Correios(object):
         url = 'http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_ITEMCODE=&P_LINGUA=001&P_TESTE=&P_TIPO=001&P_COD_UNI=%s' % (str(numero),)
         html = urllib2.urlopen(url).read()
         table = re.search(r'<table.*</TABLE>', html, re.S).group(0)
-        
+
         parsed = BeautifulSoup(table)
-        
+
         dados = []
         count = 0
         for tr in parsed.table:
@@ -131,7 +131,7 @@ class Correios(object):
                     )
                 else:
                     dados[len(dados) - 1].detalhes = unicode(tr.contents[0].string)
-                    
+
             count = count + 1
-            
+
         return dados
