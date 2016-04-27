@@ -123,22 +123,21 @@ class Correios(object):
         table = re.search(r'<table.*</TABLE>', html, re.S).group(0)
 
         parsed = BeautifulSoup(table)
-
         dados = []
-        count = 0
-        for tr in parsed.table:
-            if count > 4 and str(tr).strip() != '':
-                if re.match(r'\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}',
-                            tr.contents[0].string):
-                    dados.append(
-                        Encomenda(data=unicode(tr.contents[0].string),
-                                  local=unicode(tr.contents[1].string),
-                                  status=unicode(tr.contents[2].font.string))
-                    )
-                else:
-                    dados[len(dados) - 1].detalhes = unicode(
-                        tr.contents[0].string)
 
-            count += 1
+        for count, tr in enumerate(parsed.table):
+            if count > 4 and str(tr).strip() != '':
+                if re.match(r'\d{2}/\d{2}/\d{4} \d{2}:\d{2}',
+                            tr.contents[0].string):
+
+                    dados.append({
+                        'data': unicode(tr.contents[0].string),
+                        'local': unicode(tr.contents[1].string),
+                        'status': unicode(tr.contents[2].font.string)
+                    })
+
+                else:
+                    dados[len(dados) - 1]['detalhes'] = unicode(
+                        tr.contents[0].string)
 
         return dados
