@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-
 from pycorreios.correios import Correios
-from pycorreios.model import Cep, Frete, Encomenda
 
 
 class CorreiosTest(unittest.TestCase):
