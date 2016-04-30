@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-
 from pycorreios.correios import Correios
-from pycorreios.model import Cep, Frete, Encomenda
 
 
 class CorreiosTest(unittest.TestCase):
@@ -42,12 +40,11 @@ class CorreiosTest(unittest.TestCase):
         
     def test_encomenda(self):
 
-        valor_esperado = Encomenda(data='03/02/2016 17:57',
-                                   local=u'CDD ITAJUBA - Itajuba/MG',
-                                   status='Entrega Efetuada')
+        valor_esperado = {
+            'data': '03/02/2016 17:57',
+            'local': u'CDD ITAJUBA - Itajuba/MG',
+            'status': 'Entrega Efetuada',
+        }
 
         valor = Correios().encomenda('PJ382325976BR')[0]
-
-        self.assertEqual(valor_esperado.data, valor.data)
-        self.assertEqual(valor_esperado.local, valor.local)
-        self.assertEqual(valor_esperado.status, valor.status)
+        self.assertDictEqual(valor_esperado, valor)

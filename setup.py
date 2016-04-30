@@ -5,7 +5,7 @@ DESCRIPTION = "API for Brazillian Correios in Python"
 
 LONG_DESCRIPTION = None
 try:
-    LONG_DESCRIPTION = open('README.markdown').read()
+    LONG_DESCRIPTION = open('README.md').read()
 except:
     pass
 
