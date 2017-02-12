@@ -20,7 +20,7 @@ from xml.dom import minidom
 try:
     from BeautifulSoup import BeautifulSoup
 except ImportError:
-    raise 'Você não tem o modulo BeautifulSoup', ImportError
+    raise Exception('Você não tem o modulo BeautifulSoup', ImportError)
 
 
 class Correios(object):
