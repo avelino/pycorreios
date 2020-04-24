@@ -1,6 +1,9 @@
 API Correios
 ============
 
+> Projeto sem mantenedor, **não recomendo uso** até que exista alguem mantendo!
+> você tem interesse em manter? abra uma _issue_ expondo seu interesse
+
 Installation
 ------------
 If you have _setuptools_ you can use 
