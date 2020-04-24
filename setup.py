@@ -20,9 +20,9 @@ def get_version(version_tuple):
 # Dirty hack to get version number from pycorreios/__init__.py - we can't
 # file is read
 init = os.path.join(os.path.dirname(__file__), 'pycorreios', '__init__.py')
-version_line = filter(lambda l: l.startswith('VERSION'), open(init))[0]
+version_line = list(filter(lambda l: l.startswith('VERSION'), open(init)))[0]
 VERSION = get_version(eval(version_line.split('=')[-1]))
-print VERSION
+print(VERSION)
 
 CLASSIFIERS = [
     'Development Status :: 4 - Beta',
